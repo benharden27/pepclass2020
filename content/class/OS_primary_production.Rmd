@@ -1,0 +1,74 @@
+---
+title: Phytoplankton and Nutrients
+date: 2020-06-03
+output:
+  blogdown::html_page:
+    section_divs: no
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
+library(tidyverse)
+```
+
+# Reading
+
+1. Watch this accessible intro to phytoplankton
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/fS422O4SLc4" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+2. Read the following from [Segar](https://www.reefimages.com/oceansci.php):
+
+* [Chapter 12](https://www.reefimages.com/oceans/SegarOcean4Chap12.pdf): only pg 285 - 296.
+* [Critical Concept](https://www.reefimages.com/oceans/SegarOcean4CritCon.pdf) 14, which covers light, nutrients and photosynthesis in the ocean.
+
+3. Listen to this podcast about putting excess nitrogen into a local watershed:
+
+<iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/711745156&color=004781&hide_related=true&show_artwork=false&show_comments=false&show_teaser=false&show_user=false"></iframe><div style="font-size: 10px; color: #cccccc;line-break: anywhere;word-break: normal;overflow: hidden;white-space: nowrap;text-overflow: ellipsis; font-family: Interstate,Lucida Grande,Lucida Sans Unicode,Lucida Sans,Garuda,Verdana,Tahoma,sans-serif;font-weight: 100;"><a href="https://soundcloud.com/sea-semester" title="SEA Semester" target="_blank" style="color: #cccccc; text-decoration: none;">SEA Semester</a> · <a href="https://soundcloud.com/sea-semester/fixing-nitrogen" title="Fixing Nitrogen" target="_blank" style="color: #cccccc; text-decoration: none;">Fixing Nitrogen</a></div>
+
+# Exercises
+
+[Submit](https://classroom.google.com/u/4/c/ODEyOTAzMjY5MjJa/a/ODgzOTM0MzcxNDVa/details) a Google Doc with your answers to these questions to Google Classroom.
+
+## Vertical Distribution of Chlorophyll
+
+Below are typical vertical profiles of light and nutrients in the ocean.
+
+![](/images/light_nutrients.jpg)
+
+* Q1: Describe the patterns that you see in each - why do they behave the way they do?
+
+* Q2: Given that phytoplankton need both light and nutrients to grow, can you hypothesize the vertical distribution of phytoplankton for these profiles?
+
+## Seasonal Cycle
+
+We saw in our class on Temperature and Salinity, that the mixed-layer at mid-latitudes increases in depth during the winter due to strong, cold winds, before shoaling in the spring and into the summer when a strong thermocline (pycnocline) is developed.
+
+* Q3: How do you think this will affect the availability of nutrients in the surface water over the course of the year?
+
+Below is some data from the [Ocean Observatories Initiative](https://oceanobservatories.org/), a massive undertaking to collect data from around the globe throughout the year. Shown in the three plots are surface concentrations of Chlorophyll-a, Oxygen, and Nitrate from summer 2018 to summer 2019.
+
+```{r}
+ts <- read_csv("data/ooi.csv")
+ctd <- read_csv("data/ctd.csv") %>%
+  filter(dep <= 1000)
+
+vars<-c(fluorometric_chlorophyll_a="Chlorophyll-a (mg/L)",
+        dissolved_oxygen="Dissolved Oxygen (umol/kg)",
+        nitrate_concentration="Nitrate (umol/L)")
+
+ggplot(ts,aes(time,value))+
+  geom_point(size = .3) +
+  facet_wrap(~factor(key,names(vars)),ncol=1,scales="free_y",strip.position = "left",labeller=as_labeller(vars))+
+  labs(x=NULL,y=NULL)+
+  scale_x_datetime(date_breaks="2 months", date_labels=("%m/%y"))+
+  theme_bw() +
+  theme(strip.placement = "outside",
+        strip.background = element_blank())
+```
+
+* Q4: How does the seasonal cycle in nitrate compare with your prediction above?
+
+* Q5: Describe the seasonal cycle in phytoplankton growth - How does this relate to the seasonal cycle in oxygen?
+
+* Q6: What patterns and inter-relationships can you see on time scales of less that a month?

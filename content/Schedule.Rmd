@@ -1,0 +1,25 @@
+---
+title: Schedule
+output:
+  blogdown::html_page:
+    section_divs: no
+---
+
+# Daily Routine
+
+For most days of the class, the scheduled routine will be in EDT (PDT):
+
+* 1200 (0900): Deadline for submission of exercise responses
+* 1200-1300 (0900-1000): 30 min Peer Discussions
+* 1300-1400 (0900-1100): Slack Comments
+* 1400-1500 (1100-1200: Class Time
+
+Ahead of the peer discussion, you will need to have read the days content and submitted something as a response to the exercises posted. East coast students will probably be able to accomplish the reading and exercises the morning of the class, West coast students will probably have to do this work the previous evening.
+
+After your Peer Discussion, at least one of you group members should post any questions you still have about the work or any wonderings you have about related broader topics to the peer_discussion Slack channel. You should also respond to others' posts and offer any insight you uncovered in response to the questions posed. This is an opportunity for you to puzzle-out some of the patterns together and offer me an insight into what would be best to cover in more detail in the class to follow.
+
+The class time will follow and should be a pretty directed response to the questions you still have 
+
+# Office Hours
+
+In addition to this routine, we are offering near-daily office hours for you to ask any questions you have about the class work, routine, or issues you are experiencing. Onji and Andre will be available to you at these times as will I if needed.

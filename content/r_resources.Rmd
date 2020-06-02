@@ -1,0 +1,23 @@
+---
+title: R Resources
+output:
+  blogdown::html_page:
+    section_divs: no
+---
+
+Learning any programming language can be both completely frustrating and hugely rewarding. Be kind to yourself and try to see past the struggles to the glorious highs that will come.
+
+We'll be doing some intro work in the course, mostly centered around data visualization, but here is a selection of other resources that you might find useful in exploring the field further.
+
+[R for Data Science](https://r4ds.had.co.nz/) by Garrett Grolemund and Hadley Wickham: Core text on exploring data in R. All of it is worth a look-in.
+
+[ggplot2: Elegant Graphics for Data Analysis](https://ggplot2-book.org/) by Hadley Wickham: A ton of information about how ggplot works and how you can extend it to suit your needs.
+
+[Data Visualization: A practical introduction](https://socviz.co/) by Kieran Healy: A really nice text that combines the why and how of data visualization
+
+[RStudio Primers](https://rstudio.cloud/learn/primers): Are great intros to a bunch of things you might want to do in R
+
+[Rstudio Remote Learning](https://education.rstudio.com/blog/2020/05/remote-roundup/): A great selection of online resources to help folks learning R
+
+[Data Visualization Class](https://datavizm20.classes.andrewheiss.com/) by Dr. Andrew Heiss: A really nice class offering with a ton of great resources for learning R for data work.
+

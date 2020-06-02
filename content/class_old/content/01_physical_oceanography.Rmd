@@ -1,0 +1,133 @@
+---
+title: Temperature, Salinity and Density
+date: 2020-06-02
+output:
+  blogdown::html_page:
+    section_divs: no
+---
+
+Physical Oceanography is the study of how water moves. This includes ocean currents, waves and large scale ocean circulation. Some of the most fundamental ideas revolve around the key physical properties of the water: Temperature, Salinity and Density. We will explore these properties and how they allow or limit movement of water in the ocean.
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
+library(tidyverse)
+```
+
+
+# Reading
+
+Read the following from [Segar](https://www.reefimages.com/oceansci.php):
+
+- [Chapter 1](https://www.reefimages.com/oceans/SegarOcean4Chap01.pdf):
+    + Introduction (pg. 1-2)
+    + The Oceans and Earth's Environment (pg. 2-6). These sections are less explicitly about physical oceanography, but provide a good overview and motivation for studying the ocean.
+- [Critical Concepts](https://www.reefimages.com/oceans/SegarOcean4CritCon.pdf) 1 and 6. These cover the key ideas that relate temperature and salinity (and pressure) to density
+- [Chapter 7](https://www.reefimages.com/oceans/SegarOcean4Chap07.pdf): 
+    + Water and Heat Budgets (pg. 147-149)
+    + Climate and Ocean Surface Water Properties (pg. 154-157). These sections covers the input and removal of heat and water from the ocean.
+
+Check out this video about the impact of salinity on density and how that creates stratification.
+
+<iframe src="https://player.vimeo.com/video/424923752" width="640" height="360" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
+
+# Exercises
+
+Remember, these questions are meant to help you puzzle out some patterns. We will discuss everything in peer groups and in class. Please note your responses in the exercise assignment (ungraded).
+
+Create a Google Doc with your answers or thoughts on each question and [submit](https://classroom.google.com/u/4/c/ODEyOTAzMjY5MjJa/a/ODgzODk1NTQyNTda/details) on Google Classroom.
+
+## Depth profiles from around the world
+
+We saw maps of the surface distribution of temperature and salinity in the Segar reading. That reading also discussed why the patterns are the way they are. Below are comparable figures from the World Ocean Circulation Experiment (WOCE) for your reference.
+
+
+![](/images/woce_surf_temp.png)
+
+![](/images/woce_surf_sal.png)
+
+The following image shows five vertical profiles of temperature, salinity and density from around the world. These were all taken from a ship using a [CTD](https://www.whoi.edu/what-we-do/explore/instruments/instruments-sensors-samplers/conductivity-temperature-depth-ctd-sensors/) at locations shown on the map below. I have labelled all the profiles as letters and shown you all the positions as number, but I haven't matched them up.
+
+```{r profiles}
+df <- read_csv("data/profiles.csv")
+
+varlabs <- c(theta = "Temperature (°C)",
+             sal = "Salinity",
+             sigma = "Density (kg/m3)")
+
+gather(df, key, value, theta, sal, sigma) %>%
+  ggplot(aes(value, z)) +
+  geom_path(aes(color = Cruise)) +
+  facet_wrap(~factor(key, c("theta", "sal", "sigma")), 
+             nrow = 1, scales = "free_x", 
+             strip.position="bottom",
+             labeller = as_labeller(varlabs)) +
+  scale_y_reverse() +
+  coord_cartesian(ylim = c(500,0), expand = TRUE) +
+  scale_color_discrete(labels = c("A","B","C","D","E")) +
+  labs(x = NULL,
+       y = "Depth (m)",
+       color = "Station") +
+  theme_bw() +
+  theme(strip.background = element_blank(),
+        strip.placement = "outside")
+```
+
+```{r profile_map}
+xrange <- c(100,360)
+xbr <- seq(0,360,30)
+xlabs <- ifelse(xbr>180, paste0(360-xbr, "°W"), paste0(xbr,"°E"))
+
+yrange <- c(-90,90)
+ybr <- pretty(yrange)
+ylabs <- ifelse(ybr>0, paste0(ybr, "°N"), paste0(abs(ybr), "°S"))
+
+group_by(df, Cruise) %>% 
+  summarize(lon = mean(lon), lat = mean(lat)) %>%
+  ggplot(aes(ifelse(lon<0,lon+360,lon), lat)) +
+  geom_polygon(aes(long, lat, group = group), data = map_data("world2"), fill = "grey50") +
+  geom_point() +
+  geom_label(aes(label = c(2,4,5,1,3)), nudge_x = 10) +
+  coord_quickmap(xlim = xrange, ylim = yrange, expand = FALSE) +
+  scale_x_continuous(breaks = xbr, labels = xlabs) +
+  scale_y_continuous(breaks = ybr, labels = ylabs) +
+  labs(x = NULL, y = NULL) +
+  theme_bw()
+
+```
+
+* Q1: Use the WOCE surface temperature and salinity maps (above) to match the profiles up to their locations based on the surface temperature and salinity in the profiles.
+
+* Q2: Which profile/regions have the strongest and weakest pycnoclines? Why?
+
+## Seasonal cycle
+
+The depth and properties of the mixed layer of the ocean does not stay the same throughout the year. The following image shows the development of the temperature profile between summer and winter for a science station in the North East Pacific Ocean (Ocean Station Papa, map below).
+
+![](/images/annual_cycle.jpg)
+```{r, out.width = '50%'}
+ggplot() +
+  geom_point(aes(x = -144.9, y = 50.1), size = 3, color = "#F25C5C") +
+  geom_polygon(aes(long, lat, group = group), data= map_data("world")) +
+  coord_quickmap(xlim = c(-180,-80), ylim = c(20,70)) +
+  labs(x = NULL, y = NULL) +
+  scale_y_continuous(breaks = NULL) +
+  scale_x_continuous(breaks = NULL)
+```
+
+
+* Q3: As we move from summer to winter (August - April), how would you describe the trend in the depth and temperature of the mixed layer? 
+
+In this part of the ocean - as we move from the summer to the winter, the winds get progressively __stronger__ and __colder__.
+
+* Q4: How does this information help explain the trend in mixed layer depth and temperature you described?
+
+* Q5: Why is there very little change between seasons in the temperature below 120 m?
+
+# Peer Discussion
+
+Find your Peer Discussion partner on the spreadsheet on Google Classroom and arrange to meet for 30 min sometime between 12-1pm EDT (9-10am PDT). You should:
+
+- Discuss and thing that either of you found confusing in the reading
+- Discuss your answers to the questions posed in the exercise section
+- Come up with some questions and comments to post to the peer_discussion slack channel at the end of your meeting.

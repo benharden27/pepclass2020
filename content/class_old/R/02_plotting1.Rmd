@@ -1,0 +1,325 @@
+---
+title: Data descovery and initial plotting
+date: 2020-06-04
+output:
+  blogdown::html_page:
+    section_divs: no
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, include = TRUE, message = TRUE, warning = FALSE, R.options=list(max.print=50))
+```
+
+# Reading
+
+You should read Sections 3.1 to 3.6 (and skim the rest) of [Chapter 3](https://r4ds.had.co.nz/data-visualisation.html) of [R for Data Science](https://r4ds.had.co.nz/index.html) by Garrett Grolemund and Hadley Wickham. This should introduced you to the basic ideas behind [ggplot](https://ggplot2.tidyverse.org/index.html) and helped you create your first plots using their built-in data. ggplot is a powerful tool for producing elegant graphics and is relatively simple to use once you've mastered a few key ideas.
+
+You should also go through [this primer](https://rstudio.cloud/learn/primers/1.1) on visualization in R, which includes interactive code chunks for you to try out.
+
+# Exercises
+
+We're now going to take the ideas from the reading and apply them to an ocean data set, specifically, ocean profile data we saw in the [Physical Oceanography Class](/class/content/01_physical_oceanography/index.html). You can download this data [here](/data/profiles.csv).
+
+By the end of the exercise you should have:
+
+1. a pretty good handle on how ggplot constructs plots
+2. experimented with a few different types
+3. advanced your thinking on how oceanographic data can be plotted
+
+## Starting off
+
+I advise you to open a new R Script for this class (File -> New File -> R Script). You can store all the code you create in there and either run line by line (Ctrl/Cmd + Enter) or in bulk (using "play" button at top of script or by using a keyboard [shortcut](https://support.rstudio.com/hc/en-us/articles/200711853-Keyboard-Shortcuts)). Don't forget to comment on your code using `#` at the start of a line to make it clear what each piece of code does.
+
+ggplot is a package contained in the [tidyverse](https://www.tidyverse.org/) set of packages. So to run the functions contained, we first need to load the library into our work environment. You should have already installed this by running
+
+```{r, eval = FALSE}
+`install.packages("tidyverse")`
+```
+
+which is a one-time action. You do however need to load the packages you need every time you restart your R session (i.e. close and reopen RStudio)
+
+```{r}
+library(tidyverse)
+```
+
+This not only loads ggplot, but also other packages that we are going to use in this and other classes for tidying data sets. The "conflicts" comments are nothing to worry too much about - this is tidyverse telling us that some of the functions we just imported share names with ones already defined by R and that tidyverse will take precedent.
+
+If you had any issues installing the complete `tidyverse`, we'll also be able to do all the exercises contained here by just loading the following libraries:
+
+```{r}
+library(ggplot2)
+library(readr)
+```
+
+## Reading in the data
+
+You need to download the [data](/data/profile.csv) we are going to use and save it somewhere sensible on your computer (not your Desktop please). 
+
+Once you have the data where you want it, open it up in a text editor (TextEdit, wordpad, etc.). The file is a Comma-Separated Values (csv) file, which is one of the most common data formats used for sharing data in a way that can be useful across platforms.
+
+As the name suggests, our data is organized into columns, each separated by a comma, line-by-line. The first row of our data (as in many data sets) are the names of each of the columns. If you loaded this data into Excel, it would automatically recognize this format and convert it into the standard visual layout with row and columns.
+
+In R, we can read the data into our environment using `read_csv()`, a handy tool that is contained in the tidyverse packages. The only thing you *need* to tell `read_csv()` is where the CSV data file lives on your computer by way of a file path. On my computer it looks like this:
+
+```{r read_data, eval = FALSE}
+df <- read_csv("~/Documents/PEP2020/class/R/data/profiles.csv")
+```
+
+```{r read_data_real, include = FALSE}
+df <- read_csv("data/profiles.csv")
+```
+
+You will need to replace the path I have given with the path on your computer. RStudio has a really handy way of helping you do this. Open up some quote marks in the parentheses of the function like this: `read_csv("")`, position your cursor between the quotes, and then press the 'tab' key. This will show you all the files and folders in you home folder. By selecting folders and then pressing tab again, you can navigate your way to the file that you saved.
+
+`read_csv()` takes in a number of other parameter if you want to fine-tune how it reads your data (look at `?read_csv()` for more details), but for our data, just the file path will suffice. As you can see from the read-out, it has even guessed at the format of each of the columns based on the data contained in the file.
+
+Note: The tidyverse `read_csv()` can often get confused with the basic R reader `read.csv()`. That will cause you some issues if you use the wrong one.
+
+## Initial look at the data
+
+The data has been imported into a **data frame** in R. Side note: Technically we're working with a tidyverse "tibble", but its built on the base R data frame, so let's not get bogged down in details at this point. I'll refer to them as data frames throughout.
+
+Data frames are the most common way of organizing data in R and the form that ggplot requires for making plots. It's very similar to how Excel organizes data in rows and columns and, like Excel, there are a number of ways people choose to organize their data in this format. However, ggplot (and other tidyverse packages) focus on using "tidy" data: Each observation has a row and each variable is organized into a column.
+
+```{r, fig.cap="Visualization of how values are organized in a data frame (reproduced from R for Data Science)", out.width = '100%', echo=FALSE}
+knitr::include_graphics("images/tidy_1.png")
+```
+
+Lets have a look at the data we have just read in. The most visual way to do this is by using RStudio's data table viewer. Note the capital "V" in `View()` below.
+
+```{r view, include = TRUE, eval = FALSE}
+View(df)
+```
+
+You can also get to the same thing by using the spreadsheet icon next to the data in your environment tab.
+
+This feature allows you to scroll along your data by row and column like you would in Excel and is a great way to be able to begin exploring the data set.
+
+If you want to view the data frame in the console then you can just type the name of the data frame into the console:
+
+```{r, include = TRUE}
+df
+```
+
+This gives a print out of the first 10 rows of the data and as many columns as will fit on your screen. It also gives you some more info at the bottom about number of additional rows and columns not displayed.
+
+Another great way to get a quick look at data in a data frame is to create a summary.
+
+```{r, include = TRUE}
+summary(df)
+```
+
+This gives us a bunch of statistical data on each of the columns that aren't full of characters -- min, max, quartiles, etc.
+
+So, from these quick-looks we can begin to describe our data set:
+
+* The data is already tidy - each row is an observation and each column is a variable.
+
+* The rows are observations at particular depths (z) at locations throughout the world (lon, lat)
+
+* The columns have relatively self-explanatory headings, but we always need the metadata that tells us what each is specifically. In out case:
+    + Cruise: Unique identifier for the cruise (oceanographic expedition) on which the data was gathered
+    + Station: Unique station number (i.e. ID of location where the ship stopped to take the measurements)
+    + lon: Longitude (decimal degrees east)
+    + lat: Latitude (decimal degrees north)
+    + z: Depth (m)
+    + pres: Pressure (dbar)
+    + temp: Temperature (°C)
+    + sal: Salinity
+    + theta: Potential Temperature (°C) - the temperature the water would be if it was raised to the surface. This accounts for the slight cooling effect of increased pressure
+    + sigma: Potential Density (kgm^-^3)  
+
+## Other things to know about looking at data
+
+As we begin to explore data and begin to visualize it, some of the following functions can be useful.
+
+To get the number of rows in a data frame you can use
+
+```{r, include = TRUE}
+nrow(df)
+```
+
+and same for columns.
+
+```{r, include = TRUE}
+ncol(df)
+```
+
+You can also get all the names of columns:
+
+```{r, include = TRUE}
+names(df)
+```
+
+If you want to access just one column of the data as a vector, the easiest way is usually with `$`:
+
+```{r}
+df$temp
+```
+
+But we can also access the same column `[[...]]` and either the name or the column number (also known as the column index). The first set returns a vector of the values in the column:
+
+```{r, eval = FALSE}
+df[["temp"]]
+df[[7]]
+```
+
+Or we can access a single column data frame using `[...]`:
+
+```{r, eval = FALSE}
+df["temp"]
+df[5]
+```
+
+## Filtering data
+
+Filtering data before you plot is one of the most fundamental things you can do. It's akin to only selecting certain rows to plot from your Excel sheet. As we've already seen, the data is already "tidy" so we don't have to do anything to organize it at this point, but we're going to create a new data frame that is filtered to give us just one of the profiles. The tidyverse has a really simple way to help us do this using the `filter()` function.
+
+```{r}
+df_profile <- filter(df, Cruise == "SR04_06AQANTIX_2")
+```
+
+The filter function takes in a data frame (`df` in out case) and then some criteria for which data to select. In our case, I've said that the `Cruise` column must be `SR04_06AQANTIX_2`.
+
+The `==` here is R's way of saying: *test to see if these things are equivalent*. For example:
+
+```{r}
+1 == 1
+```
+
+and 
+
+```{r}
+1 == 2
+```
+
+Equivalences in a data frame or a vector work by looking through the whole list of values and assigning a `TRUE` or `FALSE` depending on if they are the same. For example (remember, `c()` is the way to combine values into a vector):
+
+```{r}
+x <- c(1,2,3,2,3,4,3,4,5,6,5)
+x == 3
+```
+
+This new vector is the same length as `x` but has `TRUE` for every slot that `x == 3` and `FALSE` otherwise.
+
+So, in our example, the filter function will give us every row that the `Cruise` column is `SR04_06AQANTIX_2`. You can see all the available cruises you could plot using R's inbuilt `unique()` function which takes a vector and returns just the non-repeating elements. From our `x` example:
+
+```{r}
+unique(x)
+```
+
+Or for our cruise data:
+
+```{r}
+unique(df$Cruise)
+```
+
+You can use this list to substitute in to our filter code to select a different station.
+
+## Initial Plots
+
+Recall from what you've already seen that we create a simple ggplot by specifying three things:
+
+1. The data
+1. The mapping of variables to aesthetics: what variable you want to translate to what visible thing (distance along x axis, color, etc.)
+1. A geom to represent these aesthetics - how will this look
+
+So, as a first example, we can plot the temperature data over depth in the following way:
+
+```{r, include = TRUE}
+ggplot(data = df_profile) +
+  geom_line(aes(x = z, y = temp))
+```
+
+Where we have specified that:
+
+1. Our data is contained in the data frame, `df_profile`
+1. We want to map depth (z) to position along the x axis and temperature (temp) to position along the y axis
+1. We want the representation to be a line `geom_line()`
+
+This is the most verbose way I can write this. Verbose in coding means more explicit or using-lots-of-typing. I have used `data = df_profile`, `x = dttm` and `y = temp`. As with many functions in R, both `ggplot()` and `aes()` are expecting certain inputs and instead of officially declaring them, you can just write them in the right order. The above code could be written more succinctly as:
+
+
+```{r, eval = FALSE, include = TRUE}
+ggplot(df_profile) +
+  geom_line(aes(z, temp))
+```
+
+We've lost something in the ability for us to directly interpret what is being assigned to what, but we're saving our fingers in the long run.
+
+I should also note that ggplot gives you flexibility to define your data and aesthetic mappings at a number of different places. The following all do the same thing.
+
+```{r, include = TRUE, eval = FALSE}
+ggplot(df_profile, aes(z, temp)) +
+  geom_line()
+ggplot(df_profile) +
+  geom_line(aes(z,temp))
+ggplot() +
+  geom_line(aes(z,temp), data = df_profile)
+```
+
+This, again, allows you to save your fingers if you want to make multiple geoms with the same aesthetics and also gives you some more flexibility about creating plots that combine data from multiple data sets.
+
+You can also assign a ggplot to an object as you would a vector or character string:
+
+```{r, include = TRUE}
+g <- ggplot(df_profile, aes(z,temp)) +
+  geom_line()
+```
+
+Doing this does *not* generate the plot, it just creates a ggplot object that can be deployed later by calling it by name or by adding another geom (for example a smoothing geom):
+
+```{r, include = TRUE}
+g
+```
+
+From a traditional science perspective, this might be the best way to plot the data - the independent variable (z) is on the x axis and the dependent variable (temperature) is on the y axis. From an oceanography perspective, it makes more sense to have depth be on the y axis and temperature on the x axis. Further, we can also flip the y axis to make depth be greater the further you go down.
+
+Doing this in ggplot requires us to use one of the `scale_*` functions. These functions basically say: *Take the mapping we've already set up in out ggplot and adjust how the data is mapped*. This includes telling ggplot what range of values to map to out x axis, whether we want a log axis, what colors to map our data to, and, in our case, what direction to plot the data in. We'll talk more about the `scale_*` functions in our next class.
+
+```{r}
+ggplot(df_profile, aes(temp, z)) +
+  geom_line() +
+  scale_y_reverse()
+```
+
+Uh oh. What a mess. What's happening here? ggplot actually has two geoms that can draw lines. We've been using `geom_line()` so far, but underneath the hood, this function actually sorts the y variable along the x axis. This can be useful in many cases were data is not sorted already, but in our case it means that the nice sweeping curve gets deconstructed. For our purposes, we're going to want to use `geom_path()` which joins the data up in the order they appear in the data set.
+
+
+```{r}
+ggplot(df_profile, aes(temp, z)) +
+  geom_path() +
+  scale_y_reverse()
+```
+
+We can also always avoid this joining-up-in-the-wrong-order issue by using points. Although for profiles, it's never quite as effective.
+
+```{r}
+ggplot(df_profile, aes(temp, z)) +
+  geom_point() +
+  scale_y_reverse()
+```
+
+
+## Challenges
+
+
+OK, from here-on-in, I'm going to set you some challenges to grapple with. Complete answers to come at end of class don't worry. Get through as much as you can.
+
+This is really just a forum for you to practice, experiment, break stuff and fix it. Feel free to diverge from my plan below as opportunities present themselves and you interest dictates. Plot different variables, explore the data set, have some fun.
+
+[Submit](https://classroom.google.com/u/4/c/ODEyOTAzMjY5MjJa/a/ODgzOTM0MzcyMDBa/details) an R script with your solutions to any of these challenges to Google Classroom.
+
+Some tips:
+
+- You should use [R4DS Chapter 3](https://r4ds.had.co.nz/data-visualisation.html) as a good source of information to help you complete the exercises.
+- Use `?function_name` to see the help file for this function. It can help you understand what you *need* to specify, what you *can* specify, and many have good examples.
+- keep the [ggplot cheat sheet](/docs/ggplot2-cheatsheet.pdf) handy as this breaks down the geoms really well.
+
+Try the following:
+* Change the y variable to be salinity or potential density.
+* Make your profile lines thicker and change their color.
+* Plot all the profiles in `df` on the same plot by mapping `Cruise` to the `group` or `color` aesthetic - how are these different?
+* Filter for one station and plot a scatter plot of salinity on the x axis and temperature on the y axis
+* Use all the profiles and make the same scatter plot which shows each station as a different color.
+* Can you zoom in to just 0-1000m?
