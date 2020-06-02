@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Class_olds on PEP Class 2020</title>
+    <link>/class_old/</link>
+    <description>Recent content in Class_olds on PEP Class 2020</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>© PEP 2020</copyright>
+    <lastBuildDate>Wed, 10 Jun 2020 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/class_old/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Measuring the ocean</title>
+      <link>/class_old/skills/measuring_the_ocean/</link>
+      <pubDate>Wed, 10 Jun 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/class_old/skills/measuring_the_ocean/</guid>
+      <description> How we measure Temperature and Salinity The basic tool for measuring the temperature and salinity of the ocean is the CTD (Conductivity-Temperature-Depth) device which we lower from the side of a ship to record a vertical trace (or profile) of the ocean.
+The following video came from a cruise in the North Atlantic in 2012.
+  </description>
+    </item>
+    
+    <item>
+      <title>Zooplankton</title>
+      <link>/class_old/content/04_zooplankton/</link>
+      <pubDate>Wed, 10 Jun 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/class_old/content/04_zooplankton/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Carbon and Oxygen</title>
+      <link>/class_old/content/02_chemical_oceanography/</link>
+      <pubDate>Fri, 05 Jun 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/class_old/content/02_chemical_oceanography/</guid>
+      <description>Chemical Oceanography is concerned with the the study of the interaction of dissolved ions, molecules, gasses in the ocean. This is a diverse field and we will be covering the basics of macronutrients, oxygen and carbon in this class. This will be a necessarily broad overview.
+Reading Read the following from Segar:
+ Chapter 5:  The Dissolving Power of Water (pg. 94-95) Sources and Sinks of Chemicals Dissolved in Seawater (pg.</description>
+    </item>
+    
+    <item>
+      <title>Data descovery and initial plotting</title>
+      <link>/class_old/r/02_plotting1/</link>
+      <pubDate>Thu, 04 Jun 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/class_old/r/02_plotting1/</guid>
+      <description>Reading You should read Sections 3.1 to 3.6 (and skim the rest) of Chapter 3 of R for Data Science by Garrett Grolemund and Hadley Wickham. This should introduced you to the basic ideas behind ggplot and helped you create your first plots using their built-in data. ggplot is a powerful tool for producing elegant graphics and is relatively simple to use once you’ve mastered a few key ideas.</description>
+    </item>
+    
+    <item>
+      <title>Phytoplankton and Nutrients</title>
+      <link>/class_old/content/03_primary_production/</link>
+      <pubDate>Wed, 03 Jun 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/class_old/content/03_primary_production/</guid>
+      <description>Reading Watch this accessible intro to phytoplankton   Read the following from Segar:   Chapter 12: only pg 285 - 296. Critical Concept 14, which covers light, nutrients and photosynthesis in the ocean.  Listen to this podcast about putting excess nitrogen into a local watershed:   SEA Semester · Fixing Nitrogen  Exercises Submit a Google Doc with your answers to these questions to Google Classroom.</description>
+    </item>
+    
+    <item>
+      <title>Temperature, Salinity and Density</title>
+      <link>/class_old/content/01_physical_oceanography/</link>
+      <pubDate>Tue, 02 Jun 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/class_old/content/01_physical_oceanography/</guid>
+      <description>Physical Oceanography is the study of how water moves. This includes ocean currents, waves and large scale ocean circulation. Some of the most fundamental ideas revolve around the key physical properties of the water: Temperature, Salinity and Density. We will explore these properties and how they allow or limit movement of water in the ocean.
+Reading Read the following from Segar:
+ Chapter 1:  Introduction (pg. 1-2) The Oceans and Earth’s Environment (pg.</description>
+    </item>
+    
+    <item>
+      <title>Getting Started in R</title>
+      <link>/class_old/r/01_getting_started/</link>
+      <pubDate>Mon, 01 Jun 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/class_old/r/01_getting_started/</guid>
+      <description>Our goal in learning R is to introduce you to some skills in exploring oceanographic data in R. This will mainly involve plotting tools, but will also include some discussion of working with data sets.
+NOTE: There is no exercise submission or Peer Discussion requirements for this work, but please reach out on the course Slack channel if you have any technical issues.
+Why R? Perhaps the best place to start is to ask ourselves why we are choosing to use R.</description>
+    </item>
+    
+  </channel>
+</rss>

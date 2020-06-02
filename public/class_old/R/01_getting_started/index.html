@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge"><title>Getting Started in R - PEP Class 2020</title><meta name="viewport" content="width=device-width, initial-scale=1">
+	
+<meta itemprop="name" content="Getting Started in R">
+<meta itemprop="description" content="Our goal in learning R is to introduce you to some skills in exploring oceanographic data in R. This will mainly involve plotting tools, but will also include some discussion of working with data sets.
+NOTE: There is no exercise submission or Peer Discussion requirements for this work, but please reach out on the course Slack channel if you have any technical issues.
+Why R? Perhaps the best place to start is to ask ourselves why we are choosing to use R.">
+
+
+<meta itemprop="datePublished" content="2020-06-01T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2020-06-01T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="360">
+
+
+
+<meta itemprop="keywords" content="" />
+<meta property="og:title" content="Getting Started in R" />
+<meta property="og:description" content="Our goal in learning R is to introduce you to some skills in exploring oceanographic data in R. This will mainly involve plotting tools, but will also include some discussion of working with data sets.
+NOTE: There is no exercise submission or Peer Discussion requirements for this work, but please reach out on the course Slack channel if you have any technical issues.
+Why R? Perhaps the best place to start is to ask ourselves why we are choosing to use R." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/class_old/r/01_getting_started/" />
+<meta property="article:published_time" content="2020-06-01T00:00:00&#43;00:00"/>
+<meta property="article:modified_time" content="2020-06-01T00:00:00&#43;00:00"/>
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Getting Started in R"/>
+<meta name="twitter:description" content="Our goal in learning R is to introduce you to some skills in exploring oceanographic data in R. This will mainly involve plotting tools, but will also include some discussion of working with data sets.
+NOTE: There is no exercise submission or Peer Discussion requirements for this work, but please reach out on the course Slack channel if you have any technical issues.
+Why R? Perhaps the best place to start is to ask ourselves why we are choosing to use R."/>
+<link href='https://fonts.googleapis.com/css?family=Playfair+Display:700' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" type="text/css" media="screen" href="/css/normalize.css" />
+	<link rel="stylesheet" type="text/css" media="screen" href="/css/main.css" />
+		<link rel="stylesheet" type="text/css" href="/css/custom.css" />
+	
+
+        <link id="dark-scheme" rel="stylesheet" type="text/css" href="/css/dark.css" />
+
+	
+		<script src="/js/main.js"></script>
+</head>
+
+<body>
+	<div class="container wrapper">
+		<div class="header">
+	
+		<div class="avatar">
+			<a href="/">
+				<img src="/images/dac-logo-white278x80.png" alt="PEP Class 2020" />
+			</a>
+		</div>
+	
+	<h1 class="site-title"><a href="/">PEP Class 2020</a></h1>
+	<div class="site-description"><p>Ocean and Environmental Sciences</p><nav class="nav social">
+			<ul class="flat"></ul>
+		</nav></div>
+
+	<nav class="nav">
+		<ul class="flat">
+			
+			<li>
+				<a href="/intro">About</a>
+			</li>
+			
+			<li>
+				<a href="/class">Classes</a>
+			</li>
+			
+			<li>
+				<a href="/schedule">Schedule</a>
+			</li>
+			
+			<li>
+				<a href="/docs/pep2020_syllabus.pdf">Syllabus</a>
+			</li>
+			
+			<li>
+				<a href="/r_resources">R Resources</a>
+			</li>
+			
+		</ul>
+	</nav>
+</div>
+
+
+		<div class="post">
+			<div class="post-header">
+				
+					<div class="meta">
+						<div class="date">
+							<span class="day">01</span>
+							<span class="rest">Jun 2020</span>
+						</div>
+					</div>
+				
+				<div class="matter">
+					<h1 class="title">Getting Started in R</h1>
+				</div>
+			</div>
+					
+			<div class="markdown">
+				
+
+
+<p>Our goal in learning R is to introduce you to some skills in exploring oceanographic data in R. This will mainly involve plotting tools, but will also include some discussion of working with data sets.</p>
+<p>NOTE: There is no exercise submission or Peer Discussion requirements for this work, but please reach out on the course Slack channel if you have any technical issues.</p>
+<h1 id="why-r">Why R?</h1>
+<p>Perhaps the best place to start is to ask ourselves why we are choosing to use R. Fortunately, Rob Schlegel (WHOI) sums up nicely why using R is a good idea for data science as part of his R workshop. Please read <a href="https://robwschlegel.github.io/Intro_R_Workshop/prelim.html#why-use-r">this</a>.</p>
+<p>Dan Kelley (Dalhousie) has a nice book on oceanographic analysis in R - his sub-chapter on <a href="/docs/Kelley_whyR.pdf">“Why R, and Why Now?”</a> is a quick read to help contextualize the desire to use R for oceanographic work.</p>
+<p>Please read both these short justifications to give you an insight into why R is something worth your energy.</p>
+<h1 id="downloading-r-and-rstudio">Downloading R and RStudio</h1>
+<p>You should next download both R (the programming language) and Rstudio (a nice visual interface that makes writing code more intuitive) and open RStudio to see that it has worked properly.</p>
+<p>You need to download R first:</p>
+<ul>
+<li>Go to <a href="http://www.r-project.org/" class="uri">http://www.r-project.org/</a> and choose “download R” under “Getting Started”.</li>
+<li>Select any of the sites to download R from</li>
+<li>Choose the R link for your operating system</li>
+<li><strong>Windows</strong>: select “base” and then “Download R for Windows”. Run the .exe file that you download to install R</li>
+<li><strong>Mac</strong>: select the .pkg link to download. Run the file that you download to install.</li>
+</ul>
+<p>Then you need to download RStudio:</p>
+<ul>
+<li>Go to <a href="http://www.rstudio.com" class="uri">http://www.rstudio.com</a></li>
+<li>Click “Download RStudio” and following the instructions for your operating system.</li>
+</ul>
+<p>To use R you need to open RStudio (not the R link that might have appeared on your desktop).</p>
+<h1 id="intro-to-r">Intro to R</h1>
+<p>If you’ve never used R or RStudio before it’s worth a little bit of orientation.</p>
+<p>You can get some basics on how to use R from <a href="https://rstudio.cloud/learn/primers/1.2">this tutorial</a>. Watch the videos and run the interactive code chunks to learn some of the basics.</p>
+<p>Watch this video to orient yourself to the RStudio Interface</p>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/cnQ-v1UUWyE" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
+</iframe>
+
+			</div>
+		
+    <style>
+   
+
+  .toc {
+    position: fixed;
+    top: 40%;
+    left: 1%;
+    width: 15%;
+    transform: translateY(-50%);
+     
+     
+    border-radius: 5px;
+    padding-bottom: 1rem;
+  }
+
+  .nav ul li a:hover {
+    text-decoration: underline;
+    color: #B10DC9;
+  }
+
+  .toc .page-header {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .toc-nav ul {
+     
+     
+    white-space: nowrap; 
+    line-height: 1rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+   
+  .toc-nav ul ul ul {
+    margin-left: 2rem;
+  }
+
+  .toc-nav .nav-link {
+    white-space: nowrap; 
+    overflow: hidden;
+    text-overflow: ellipsis;
+     
+    color: #333;
+  }
+  
+  .toc a {
+    text-overflow: ellipsis;
+  }
+
+
+
+   
+  @media (max-width: 1080px) {
+    main {
+      max-width: 100%;
+    }
+
+    .toc {
+      display: none;
+    }
+  }
+</style>
+
+
+
+
+
+
+
+
+
+
+<div class="toc">
+  
+
+  <a class="page-header" href="#"><strong>- GO TO TOP -</strong></a>
+  <hr>
+  <div id="page-scrollspy" class="toc-nav">
+
+    
+    
+    
+    
+    
+    
+    <ul class="nav" id="">
+      
+      
+      <li class="nav-item">
+        <a class="nav-link text-left" href="#why-r">
+          Why R?
+        </a>
+      </li>
+      
+      
+    </ul>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <ul class="nav" id="">
+      
+      
+      <li class="nav-item">
+        <a class="nav-link text-left" href="#downloading-r-and-rstudio">
+          Downloading R and RStudio
+        </a>
+      </li>
+      
+      
+    </ul>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <ul class="nav" id="">
+      
+      
+      <li class="nav-item">
+        <a class="nav-link text-left" href="#intro-to-r">
+          Intro to R
+        </a>
+      </li>
+      
+      
+    </ul>
+    
+    
+    
+    
+
+  </div>
+
+</div>
+
+
+    
+			<div class="tags">
+				
+					
+				
+			</div>
+
+		</div>
+
+	</div>
+	<div class="footer wrapper">
+	<nav class="nav">
+		<div>2020  © PEP 2020 |  Modified <a href="https://github.com/knadh/hugo-ink">Ink</a> theme on <a href="https://gohugo.io">Hugo</a></div>
+	</nav>
+</div>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-123-45', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+</body>
+</html>
