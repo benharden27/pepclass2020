@@ -65,7 +65,3 @@ weight = 3
 #name = "RSS"
 #icon = "rss"
 #url = "/index.xml"
-
-[taxonomies]
-   tag = "tags"
-   category = "categories"
