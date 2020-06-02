@@ -6,12 +6,13 @@ output:
     section_divs: no
 ---
 
+Chemical Oceanography is concerned with the the study of the interaction of dissolved ions, molecules, gasses in the ocean. This is a diverse field and we will be covering the basics of macronutrients, oxygen and carbon in this class. This will be a necessarily broad overview.
+
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
 library(tidyverse)
 ```
 
-Chemical Oceanography is concerned with the the study of the interaction of dissolved ions, molecules, gasses in the ocean. This is a diverse field and we will be covering the basics of macronutrients, oxygen and carbon in this class. This will be a necessarily broad overview.
 
 # Reading
 
